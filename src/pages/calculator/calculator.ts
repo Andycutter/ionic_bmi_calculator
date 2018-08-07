@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 
 /**
  * Generated class for the CalculatorPage page.
@@ -14,12 +14,35 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'calculator.html',
 })
 export class CalculatorPage {
+  height: number;
+  weight: number;
+  bmiValue: number;
+  bmiMessage: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor() {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CalculatorPage');
+  calculateBMI() {
+    if (this.weight > 0 && this.height > 0) {
+      let finalBmi = this.weight / (this.height / 100 * this.height / 100);
+      this.bmiValue = parseFloat(finalBmi.toFixed(2))
+      this.setBMIMessage();
+    }
+  }
+
+  private setBMIMessage() {
+    if (this.bmiValue < 18.5) {
+      this.bmiMessage = "You're underweight"
+    }
+    if (this.bmiValue > 18.5 && this.bmiValue < 25) {
+      this.bmiMessage = "Your weight is within 'normal' range"
+    }
+    if (this.bmiValue > 25 && this.bmiValue < 30) {
+      this.bmiMessage = "You're overweight"
+    }
+    if (this.bmiValue > 30 ) {
+      this.bmiMessage = "You're Obese"
+    }
   }
 
 }
