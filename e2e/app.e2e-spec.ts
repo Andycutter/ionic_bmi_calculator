@@ -17,5 +17,11 @@ describe('App', () => {
         expect(title).toEqual('Ionic App');
       });
     });
+
+    it('fill in form', () => {
+      page.fillInForm(50, 180);
+      expect(page.results_card_header()).toContain('BMI Calculation');
+      expect(page.results_card_content()).toContain('Person height: 180');
+  });
   })
 });
