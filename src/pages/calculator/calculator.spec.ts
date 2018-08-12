@@ -47,4 +47,31 @@ describe('AppComponent', () => {
     expect(component.bmiValue).toEqual(25);
     expect(component.setBMIMessage).toHaveBeenCalled
   });
+
+  it('setBMIMessage is "underweight" if bmiValue is under 18.5', () => {
+    component.bmiValue = 18.49;
+    component.setBMIMessage();
+
+    expect(component.bmiMessage).toEqual('underweight')
+  });
+
+  it('setBMIMessage is "normal" if bmiValue is between 18.5 and 25', () => {
+    component.bmiValue = 24.99
+    component.setBMIMessage();
+
+    expect(component.bmiMessage).toEqual('within the normal range')
+  });
+
+  it('setBMIMessage is "overweight" if bmiValue is between 25 and 30', () => {
+    component.bmiValue = 25.01
+    component.setBMIMessage();
+
+    expect(component.bmiMessage).toEqual('overweight')
+  });
+
+  it('setBMIMessage is "obese" if bmiValue is above 30', () => {
+    component.bmiValue = 30.01
+    component.setBMIMessage();
+    expect(component.bmiMessage).toEqual('obese')
+  });
 });
