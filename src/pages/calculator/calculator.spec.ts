@@ -1,56 +1,50 @@
-import { CalculatorPage } from "./calculator";
-import { TestBed, async } from "@angular/core/testing";
-import { IonicModule, Platform, NavController } from "ionic-angular";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { PlatformMock, StatusBarMock, SplashScreenMock, NavControllerMock } from "ionic-mocks";
+import { CalculatorPage } from './calculator'
+import { TestBed } from '@angular/core/testing'
+import { IonicPageModule, Platform, NavController, NavParams, Config, App, DomController, Keyboard, GestureController, Form } from 'ionic-angular';
+import { PlatformMock, StatusBarMock, SplashScreenMock, NavControllerMock, NavParamsMock, ConfigMock, KeyboardMock, FormMock } from 'ionic-mocks'
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-describe("CalculatorPage", () => {
-  let calculatorpage: CalculatorPage;
+describe('AppComponent', () => {
+  let fixture, component;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         CalculatorPage
       ],
-      imports: [IonicModule.forRoot(CalculatorPage)],
+      imports: [
+        IonicPageModule.forChild(CalculatorPage)
+      ],
       providers: [
         { provide: Platform, useFactory: () => PlatformMock.instance() },
         { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
         { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
-        { provide: NavController, useFactory: () => NavControllerMock.instance() }
+        { provide: NavController, useFactory: () => NavControllerMock.instance() },
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: Config, useFactory: () => ConfigMock.instance() },
+        { provide: Keyboard, useFactory: () => KeyboardMock.instance() },
+        { provide: Form, useFactory: () => FormMock.instance() },
+        App, DomController, GestureController
       ]
-    }).compileComponents();
-  }));
+    });
 
-  beforeEach(() => {
-    let fixture = TestBed.createComponent(CalculatorPage);
-    calculatorpage = fixture.componentInstance;
+    fixture = TestBed.createComponent(CalculatorPage);
+    component = fixture.componentInstance;
   });
 
-  it("should create the calculator page", () => {
-    expect(calculatorpage).toBeTruthy();
-    expect(calculatorpage instanceof CalculatorPage).toEqual(true);
+  it('should create the calculator page', () => {
+    expect(component).toBeTruthy();
+    expect(component instanceof CalculatorPage).toEqual(true);
   });
 
-  it('should have calculateBMI function', () => {
-    spyOn(calculatorpage, 'calculateBMI');
+  it('Calculates BMI', () => {
+    spyOn(component, 'setBMIMessage')
+    component.weight = 100;
+    component.height = 200;
+    component.calculateBMI();
 
-    calculatorpage.calculateBMI()
-
-    expect(calculatorpage.calculateBMI).toHaveBeenCalled(); 
+    expect(component.bmiValue).toEqual(25);
+    expect(component.setBMIMessage).toHaveBeenCalled
   });
-
-  it('should return calculated bmi', () => {     
-    let person = { weight: 50, height: 180 };
-
-    expect(calculatorpage.calculateBMI(person)).toEqual(15.43)
-  });
-
-  it('assess should return Excellent', () => {
-    let person = { weight: 50, height: 180 };
-    
-    expect(calculatorpage.calculateBMI(person)).toEqual('underweight');
-  });
-
 });
