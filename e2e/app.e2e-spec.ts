@@ -1,27 +1,37 @@
-import { Page } from './app.po';
+import { by, browser, element } from 'protractor'
 
 describe('App', () => {
-  let page: Page;
-
-  beforeEach(() => {
-    page = new Page();
-  });
 
   describe('default screen', () => {
     beforeEach(() => {
-      page.navigateTo('/');
+      browser.get('/');
     });
 
-     it('should have a title saying Ionic App', () => {
-      page.getTitle().then(title => {
-        expect(title).toEqual('Ionic App');
-      });
+    it('App should have a title', () => {
+      expect(browser.getTitle()).toContain('Ionic App')
     });
 
-    it('fill in form', () => {
-      page.fillInForm(50, 180);
-      expect(page.results_card_header()).toContain('BMI Calculation');
-      expect(page.results_card_content()).toContain('Person height: 180');
+    it('the calculator tab is displayed by default', () => {
+      expect(element(by.css('[aria-selected=true]'))
+        .getAttribute('innerHTML'))
+        .toContain('Calculator');
+    });
+
+    it('should have title "Calculator"', () => {
+      expect(element(by.css('ion-navbar:first-child'))
+        .getAttribute('innerHTML'))
+        .toContain('Calculator');
+    });
+
+    it('should have a Calculator Tab', () => {
+      expect(element(by.css('#tab-t0-0'))
+        .getAttribute('innerHTML'))
+        .toContain('Calculator');
+    })
+    it('should have an about Tab', () => {
+      expect(element(by.css('#tab-t0-1'))
+        .getAttribute('innerHTML'))
+        .toContain('About');
+    })
   });
-  })
 });
