@@ -19,4 +19,3 @@ This BMI calculator is written in Ionic using TypeScript.
 The application is unit tested with Karma / Jasmine and acceptance tested with e2e.
 
 *OBS. commits marked with (MsM) have used code from from coach Magnus's test suggestions.*
-
